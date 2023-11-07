@@ -23,26 +23,30 @@ def amazonScrapper(url):
         title = title_div.find('h1', id='title').text.strip()
         product_name = title
     except Exception as err:
-        print(
-            f"An error occurred while trying to get the name of the product: {err}")
+        print(f"An error occurred while trying to get the name of the product: {err}")
         return None, None, None
 
     if product_name is None:
-        print("Unable to get name of the product please try again later or try another product")
+        print("Unable to get name of the product please try another product")
         return None, None, None
 
     try:
         price_span = soup.find('span', class_='a-price-whole')
         price = price_span.text.strip()
     except Exception as e:
-        print(
-            f"An error occurred while trying to get the price of the product: {err}")
+        print(f"An error occurred while trying to get the price of the product: {err}")
         return None, None, None
 
     if price is None:
-        print("Unable to get price of the product please try again later or try another product")
+        print(f"Unable to get price of the product please try another product: {err}")
         return None, None, None
 
-    print(f"Price of {product_name} on Amazon: ₹{price}\n")
+    print(f"->> Price of {product_name} on Amazon: ₹{price}")
+    
+    try:
+        ratings = soup.find('span', class_='a-icon-alt').text.strip()
+    except Exception as err:
+        print(f"Unable to get ratings of the product please try another product: {err}")
+    print(f"->> Ratings: {ratings}\n")
 
     return product_name, "Amazon", price

@@ -10,6 +10,7 @@ def flipkartScrapper(url):
     try:
         html = requests.get(url, headers=headers).text
     except requests.exceptions.RequestException:
+        print(f"An error occurred while trying to access the URL: {err}")
         return None, None, None
     
     soup = BeautifulSoup(html, 'lxml')
@@ -21,20 +22,29 @@ def flipkartScrapper(url):
     try:
         title = soup.find('span', class_='B_NuCI').text.strip()
         product_name = title
-    except Exception:
+    except Exception as err:
+        print(f"An error occurred while trying to get the name of the product: {err}")
         return None, None, None
 
     if product_name is None:
+        print("Unable to get name of the product please try another product")
         return None, None, None
 
     try:
         price = soup.find('div', class_='_30jeq3 _16Jk6d').text.strip()
-    except Exception:
+    except Exception as err:
+        print(f"An error occurred while trying to get the price of the product: {err}")
         return None, None, None
 
     if price is None:
+        print(f"Unable to get price of the product please try another product: {err}")
         return None, None, None
+    print(f"->> Price of {product_name} on Flipkart: {price}\n")    
     
-    print(f"Price of {product_name} on Flipkart: {price}\n")
-
+    try:
+        ratings = soup.find('span', class_='_3LWZ1K').text.strip()
+    except Exception as err:
+        print(f"Unable to get ratings of the product please try another product: {err}")
+    print(f"->> Ratings: {ratings}\n")
+    
     return product_name, "Flipkart", price

@@ -39,12 +39,7 @@ def flipkartScrapper(url):
     if price is None:
         print(f"Unable to get price of the product please try another product: {err}")
         return None, None, None
-    print(f"->> Price of {product_name} on Flipkart: {price}\n")    
     
-    try:
-        ratings = soup.find('span', class_='_3LWZ1K').text.strip()
-    except Exception as err:
-        print(f"Unable to get ratings of the product please try another product: {err}")
-    print(f"->> Ratings: {ratings}\n")
+    print(f"->> Price of {product_name} on Flipkart: {price}\n")    
     
     return product_name, "Flipkart", price

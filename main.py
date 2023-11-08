@@ -34,10 +34,11 @@ def main():
             break
     
     #  Resprenting the price in table format    
-    make_table(prices=prices, sources=sources)
         
     # Comparing price
-    new_prices = [_price.replace(',', '').replace('.', '').replace('₹', '') for _price in prices]
-    print(f"->> Min price for {names[new_prices.index(min(new_prices))]} is ₹{prices[new_prices.index(min(new_prices))].replace('.', '').replace('₹', '')} on {sources[new_prices.index(min(new_prices))]}")
+    if prices:
+        new_prices = [_price.replace(',', '').replace('.', '').replace('₹', '') for _price in prices]
+        make_table(prices=new_prices, sources=sources)
+        print(f"->> Min price for {names[new_prices.index(min(new_prices))]} is ₹{prices[new_prices.index(min(new_prices))].replace('.', '').replace('₹', '')} on {sources[new_prices.index(min(new_prices))]}")
     
 main()
